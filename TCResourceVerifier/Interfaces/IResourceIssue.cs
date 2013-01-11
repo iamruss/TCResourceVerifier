@@ -11,13 +11,8 @@ namespace TCResourceVerifier.Interfaces
         IWidget Widget { get; }
 
         /// <summary>
-        /// Missing resources
+        /// Problematic resources
         /// </summary>
-        List<ProblemResourceInfo> MissingResources { get; set; }
-
-        /// <summary>
-        /// Resources, not used in widget
-        /// </summary>
-        List<ProblemResourceInfo> UnusedResources { get; set; }
+        List<ProblemResourceInfo> ProblemResources { get; set; }
     }
 }

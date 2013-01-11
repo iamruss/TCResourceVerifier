@@ -5,6 +5,6 @@ namespace TCResourceVerifier.Interfaces
 {
     public interface IVerificationStrategy
     {
-        Dictionary<IWidgetFile, ResourceIssue> Use(IEnumerable<IWidget> widgets);
+        ResourceIssue Use(IWidget widgets);
     }
 }

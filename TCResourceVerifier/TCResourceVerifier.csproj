@@ -55,6 +55,7 @@
   <ItemGroup>
     <Compile Include="Entities\ProblemResourceInfo.cs" />
     <Compile Include="Entities\ResourceIssue.cs" />
+    <Compile Include="Entities\ResourceProblemType.cs" />
     <Compile Include="Entities\Widget.cs" />
     <Compile Include="Entities\WidgetDependencyFile.cs" />
     <Compile Include="Interfaces\IResourceIssue.cs" />

@@ -11,9 +11,33 @@ using TCResourceVerifier.Interfaces;
 
 namespace TCResourceVerifier.Entities
 {
-	public class ProblemResourceInfo
+    public class ProblemResourceInfo
 	{
-		/// <summary>
+        protected bool Equals(ProblemResourceInfo other)
+        {
+            return ProblemType == other.ProblemType && string.Equals(LanguageName, other.LanguageName) && string.Equals(ResourceName, other.ResourceName);
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != this.GetType()) return false;
+            return Equals((ProblemResourceInfo) obj);
+        }
+
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                int hashCode = (int) ProblemType;
+                hashCode = (hashCode*397) ^ (LanguageName != null ? LanguageName.GetHashCode() : 0);
+                hashCode = (hashCode*397) ^ (ResourceName != null ? ResourceName.GetHashCode() : 0);
+                return hashCode;
+            }
+        }
+
+        /// <summary>
 		/// lang key
 		/// </summary>
 		public string LanguageName { get; set; }
@@ -33,5 +57,10 @@ namespace TCResourceVerifier.Entities
         /// Specific file which references problematic resource
         /// </summary>
         public IWidgetFile WidetFile { get; set; }
+
+        /// <summary>
+        /// type of problem
+        /// </summary>
+        public ResourceProblemType ProblemType { get; set; }
 	}
 }

@@ -1,5 +1,6 @@
 using Ninject.Modules;
 using TCResourceVerifier.Interfaces;
+using TCResourceVerifier.Services;
 
 namespace TCResourceVerifier
 {
@@ -7,7 +8,8 @@ namespace TCResourceVerifier
     {
         public override void Load()
         {
-            
+            Bind<IFileSystemService>().To<FileSystemServiceImpl>();
+            Bind<IWidgetReader>().To<WidgetReader>();
         }
     }
 }

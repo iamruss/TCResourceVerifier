@@ -38,6 +38,7 @@
                 <DataGridTextColumn Header="Referencing File" Binding="{Binding WidetFile.FileName}"/>
                 <DataGridTextColumn Header="Language" Binding="{Binding LanguageName}"/>
                 <DataGridTextColumn Header="Resource Name" Binding="{Binding ResourceName}"/>
+                <DataGridTextColumn Header="Problem Type" Binding="{Binding ProblemType}"/>
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

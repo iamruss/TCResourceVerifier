@@ -11,8 +11,7 @@ namespace TCResourceVerifier.Entities
         public ResourceIssue(IWidget widget)
         {
             Widget = widget;
-            MissingResources = new List<ProblemResourceInfo>();
-            UnusedResources = new List<ProblemResourceInfo>();
+            ProblemResources = new List<ProblemResourceInfo>();
         }
 
         /// <summary>
@@ -21,14 +20,10 @@ namespace TCResourceVerifier.Entities
         public IWidget Widget { get; protected set; }
 
         /// <summary>
-        /// Missing resources
+        /// Problematic resource
         /// </summary>
-        public List<ProblemResourceInfo> MissingResources { get; set; }
+        public List<ProblemResourceInfo> ProblemResources { get; set; }
 
-        /// <summary>
-        /// Resources, not used in widget
-        /// </summary>
-        public List<ProblemResourceInfo> UnusedResources { get; set; }
 
         /// <summary>
         /// Flag if issue is in fact an issue
@@ -36,7 +31,7 @@ namespace TCResourceVerifier.Entities
         /// <returns></returns>
         public bool HasIssues()
         {
-            return MissingResources.Count > 0 || UnusedResources.Count > 0;
+            return ProblemResources.Count > 0;
         }
     }
 }

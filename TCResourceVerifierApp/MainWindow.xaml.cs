@@ -26,8 +26,9 @@ namespace Grabrus.TC.ResourceVerifier
 	{
 		private string _path = string.Empty;
 		private Dictionary<IWidgetFile, ResourceIssue> _problems;
+	    private readonly Verifier _verifier = new Verifier();
 
-		public MainWindow()
+	    public MainWindow()
 		{
 			InitializeComponent();
 		}
@@ -72,9 +73,13 @@ namespace Grabrus.TC.ResourceVerifier
 
 		private void WorkerTranactionDoWork(object sender, DoWorkEventArgs e)
 		{
-			var strategy = new FindMissingLanguageResourceKeys();
-            var widgetReader = new WidgetReader(_path);
-            _problems = strategy.Use(widgetReader.LoadWidgets());
+            var strategies = new IVerificationStrategy[]
+                            {
+                                new FindMissingLanguageResourceKeys(),
+                                new FindMissingLanguageResourceKeys(),
+                            };
+
+		    _problems = _verifier.Process(_path, strategies);
 		}
 
 		private void OnSelectedProblemSelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -82,7 +87,7 @@ namespace Grabrus.TC.ResourceVerifier
 			if (problemsGrid.SelectedItem != null && _problems.ContainsKey((IWidgetFile) problemsGrid.SelectedItem))
 			{
 				ResourceIssue selected = _problems[((IWidgetFile) problemsGrid.SelectedItem)];
-				detailsGrid.ItemsSource = selected.MissingResources;
+				detailsGrid.ItemsSource = selected.ProblemResources;
 			}
 		}
 

@@ -12,43 +12,47 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Xml.Linq;
+using Ninject;
 using TCResourceVerifier.Entities;
 using TCResourceVerifier.Interfaces;
 using TCResourceVerifier.Services;
 
 namespace TCResourceVerifier
 {
-    public class WidgetReader
-	{
+    public interface IWidgetReader
+    {
+        List<IWidget> LoadWidgets(string rootFolderName);
+    }
+
+    public class WidgetReader : IWidgetReader
+    {
 		private const string ImageFileExtensions = ".jpg.png.gif";
 		private readonly IFileSystemService _fileSystemService;
-		private readonly string _rootFolderName;
 
-		public WidgetReader(string rootFolderName)
-			: this(rootFolderName, new FileSystemServiceImpl())
+		public WidgetReader()
+			: this(new FileSystemServiceImpl())
 		{
 		}
 
-		public WidgetReader(string rootFolderName, IFileSystemService fileSystemService)
+        [Inject]
+		public WidgetReader(IFileSystemService fileSystemService)
 		{
-			if (rootFolderName == null)
-			{
-				throw new ArgumentNullException("rootFolderName");
-			}
 			if (fileSystemService == null)
 			{
 				throw new ArgumentNullException("fileSystemService");
 			}
-			_rootFolderName = rootFolderName;
+
 			_fileSystemService = fileSystemService;
 		}
 
-		public List<IWidget> LoadWidgets()
+		public List<IWidget> LoadWidgets(string rootFolderName)
 		{
+            if (!_fileSystemService.DirectoryExists(rootFolderName))
+            {
+                throw new FileNotFoundException(string.Format(@"Cannot find folder ""{0}""", rootFolderName));
+            }
 			var resultList = new List<IWidget>();
-			var files = new List<string>(_fileSystemService.EnumerateFileSystemEntries(_rootFolderName,
-				                                                               "*.xml",
-				                                                               SearchOption.TopDirectoryOnly));
+            var files = new List<string>(_fileSystemService.EnumerateFileSystemEntries(rootFolderName,"*.xml",SearchOption.TopDirectoryOnly));
 
 			foreach (string file in files)
 			{
