@@ -16,6 +16,10 @@ namespace TCResourceVerifier.Interfaces
 		string Name { get; set; }
 		string Description { get; set; }
 		string ContentScript { get; set; }
+        string HeaderScript { get; set; }
+        string ConfigSection { get; set; }
+        string NameDescXml { get; set; }
+
 		Guid InstanceIdentifier { get; set; }
 
 		List<IWidgetDependencyFile> DependencyFiles { get; set; }

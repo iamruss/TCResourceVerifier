@@ -17,6 +17,9 @@ namespace TCResourceVerifier.Tests
         [TestCase(TokenTestCases.Tokens_2, 2)]
         [TestCase(TokenTestCases.Tokens_3, 3)]
         [TestCase(TokenTestCases.Tokens_33, 3)]
+        [TestCase(TokenTestCases.CurlyTokens_0, 0)]
+        [TestCase(TokenTestCases.CurlyTokens_1, 1)]
+        [TestCase(TokenTestCases.CurlyTokens_2, 2)]
         public void ReturnsProperDistinctCollection(string content, int count)
         {
             IEnumerable<string> tokens = content.ParseLanguageToken();
@@ -40,6 +43,8 @@ namespace TCResourceVerifier.Tests
         [TestCase(TokenTestCases.Tokens_2, new []{ "Token_1", "Token_2"})]
         [TestCase(TokenTestCases.Tokens_3, new[] { "Token_1",  "Token_2", "Token_3" })]
         [TestCase(TokenTestCases.Tokens_33, new []{ "Token_1",  "Token_2", "Token_3"})]
+        [TestCase(TokenTestCases.CurlyTokens_1, new[] { "Blogs_AboutBlog_Name1" })]
+        [TestCase(TokenTestCases.CurlyTokens_2, new[] { "Blogs_AboutBlog_Name1", "Blogs_AboutBlog_Name2" })]
         public void ReturnsProperTokenCollection(string content, string[] expectedTokens)
         {
             IEnumerable<string> tokens = content.ParseLanguageToken();

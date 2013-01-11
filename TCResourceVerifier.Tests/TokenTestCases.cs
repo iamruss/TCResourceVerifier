@@ -56,6 +56,44 @@ $core_v2_language.GetResource('Token_1')";
 #end
 $core_v2_language.GetResource('Token_1')";
 
+        public const string CurlyTokens_0 = @"
+<![CDATA[
+<propertyGroup id=""options"">
+	<property id=""fragmentHeader"" dataType=""string"" defaultValue=""$resource:Blogs_AboutBlog_Name"" controlType=""Telligent.Evolution.Controls.ContentFragmentTokenStringControl, Telligent.Evolution.Controls"" />
+</propertyGroup>";
+
+        public const string CurlyTokens_1 = @"
+<![CDATA[
+<propertyGroup id=""options"">
+	<property id=""fragmentHeader"" dataType=""string"" defaultValue=""${resource:Blogs_AboutBlog_Name1}"" controlType=""Telligent.Evolution.Controls.ContentFragmentTokenStringControl, Telligent.Evolution.Controls"" />
+</propertyGroup>";
+
+        public const string CurlyTokens_2 = @"
+<![CDATA[
+<propertyGroup id=""options"">
+	<property id=""fragmentHeader"" dataType=""${resource:Blogs_AboutBlog_Name1}"" defaultValue=""${resource:Blogs_AboutBlog_Name2}"" controlType=""Telligent.Evolution.Controls.ContentFragmentTokenStringControl, Telligent.Evolution.Controls"" />
+</propertyGroup>";
+
+
+/*
+         public const string CurlyTokens_0 = @"
+<![CDATA[
+<propertyGroup id=""options"" resourceName=""Options"">
+	<property id=""fragmentHeader"" resourceName=""CF_Title"" dataType=""string"" defaultValue=""$resource:Blogs_AboutBlog_Name"" controlType=""Telligent.Evolution.Controls.ContentFragmentTokenStringControl, Telligent.Evolution.Controls"" />
+</propertyGroup>";
+
+        public const string CurlyTokens_1 = @"
+<![CDATA[
+<propertyGroup id=""options"" resourceName=""Options"">
+	<property id=""fragmentHeader"" resourceName=""CF_Title"" dataType=""string"" defaultValue=""${resource:Blogs_AboutBlog_Name1}"" controlType=""Telligent.Evolution.Controls.ContentFragmentTokenStringControl, Telligent.Evolution.Controls"" />
+</propertyGroup>";
+
+        public const string CurlyTokens_2 = @"
+<![CDATA[
+<propertyGroup id=""options"" resourceName=""Options"">
+	<property id=""fragmentHeader"" resourceName=""CF_Title"" dataType=""${resource:Blogs_AboutBlog_Name1}"" defaultValue=""${resource:Blogs_AboutBlog_Name2}"" controlType=""Telligent.Evolution.Controls.ContentFragmentTokenStringControl, Telligent.Evolution.Controls"" />
+</propertyGroup>";
+ */
     }
     // ReSharper restore InconsistentNaming
 }

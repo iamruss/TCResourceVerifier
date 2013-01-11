@@ -86,13 +86,19 @@ namespace TCResourceVerifier
 						{
 							widget.ContentScript = elementContentScript.Value;
 						}
-
+					    XElement headerScript = widgetElement.Element("headerScript");
+                        if (headerScript != null)
+                        {
+                            widget.HeaderScript = headerScript.Value;
+                        }
+					    XElement configSection = widgetElement.Element("configuration");
+					    if (configSection != null)
+					    {
+					        widget.ConfigSection = configSection.Value;
+					    }
 						LoadInfoFromHeader(widgetElement, widget);
-
 						LoadLanguages(widget, widgetElement);
-
 						LoadDependenices(widget, fileInfo);
-
 					    ResolveWidgetHeader(widget);
 					}
 				}
@@ -114,6 +120,7 @@ namespace TCResourceVerifier
         private const string HeaderResourcePrefix = "${resource:";
 	    private void ResolveWidgetHeader(Widget widget)
 	    {
+	        widget.NameDescXml = string.Format("\"{0}\" \"{1}\"", widget.Name, widget.Description);
             if (widget.Name.StartsWith(HeaderResourcePrefix))
             {
                 widget.Name = ResolveResource(widget, widget.Name);

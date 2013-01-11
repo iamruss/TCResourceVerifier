@@ -76,7 +76,7 @@ namespace Grabrus.TC.ResourceVerifier
             var strategies = new IVerificationStrategy[]
                             {
                                 new FindMissingLanguageResourceKeys(),
-                                new FindMissingLanguageResourceKeys(),
+                                new FindUnusedLanguageResourceKeys()
                             };
 
 		    _problems = _verifier.Process(_path, strategies);

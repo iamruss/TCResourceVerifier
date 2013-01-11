@@ -8,6 +8,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Xml.Linq;
 using TCResourceVerifier.Interfaces;
 
 namespace TCResourceVerifier.Entities
@@ -32,6 +33,9 @@ namespace TCResourceVerifier.Entities
 		public string Name { get; set; }
 		public string Description { get; set; }
 		public string ContentScript { get; set; }
+        public string HeaderScript { get; set; }
+        public string ConfigSection { get; set; }
+        public string NameDescXml { get; set; }
 
 		public List<IWidgetDependencyFile> DependencyFiles { get; set; }
 		public Dictionary<string, Dictionary<string, string>> Languages { get; set; }
@@ -78,5 +82,6 @@ namespace TCResourceVerifier.Entities
         {
             get { return WidgetComparerInstance; }
         }
+
 	}
 }

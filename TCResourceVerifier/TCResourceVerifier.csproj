@@ -69,6 +69,7 @@
     <Compile Include="Entities\WidgetFileType.cs" />
     <Compile Include="Extensions\LanguageResourceParser.cs" />
     <Compile Include="SimpleModule.cs" />
+    <Compile Include="Strategies\FindUnusedLanguageResourceKeys.cs" />
     <Compile Include="Verifier.cs" />
     <Compile Include="WidgetReader.cs" />
     <Compile Include="Strategies\FindMissingLanguageResourceKeys.cs" />

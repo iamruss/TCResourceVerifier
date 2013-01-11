@@ -15,7 +15,9 @@ namespace TCResourceVerifier.Extensions
 	public static class LanguageTokenParserExtension
 	{
 		private static readonly Regex TokenRegex
-			= new Regex(@"\$core_v2_language\.GetResource\(('|""){1}(?<langToken>([^'\$""]*)+)('|""){1}\)",
+            = new Regex(@"(\$core_v2_language\.GetResource\(('|""){1}(?<langToken>([^'\$""]*)+)('|""){1}\)|"
+                    + @"('|"")\$\{resource:(?<langToken>([^'\$""]*)+)\}('|"")|"
+                    + @" resourceName=('|"")(?<langToken>([^'\$""]*)+)('|""))",
 							RegexOptions.Compiled
 							| RegexOptions.IgnoreCase
 							| RegexOptions.Multiline
@@ -23,12 +25,16 @@ namespace TCResourceVerifier.Extensions
 
 		public static IEnumerable<string> ParseLanguageToken(this string content)
 		{
+            if (string.IsNullOrEmpty(content))
+            {
+                return new List<string>();
+            }
 			MatchCollection matches = TokenRegex.Matches(content);
 			List<string> tokens = matches.Cast<Match>()
 				.Where(m => m.Success)
 				.Select(m => m.Groups["langToken"].ToString())
 				.ToList();
-			return tokens.Distinct();
+			return tokens.Distinct().AsEnumerable();
 		}
 	}
 }
