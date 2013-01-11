@@ -10,7 +10,7 @@ using System.Collections.Generic;
 using System.IO;
 using TCResourceVerifier.Interfaces;
 
-namespace TCResourceVerifier
+namespace TCResourceVerifier.Services
 {
 	public class FileSystemServiceImpl : IFileSystemService
 	{

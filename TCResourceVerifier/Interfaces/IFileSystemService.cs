@@ -11,7 +11,7 @@ using System.IO;
 
 namespace TCResourceVerifier.Interfaces
 {
-	public interface IFileSystemService
+    public interface IFileSystemService
 	{
 		IEnumerable<string> EnumerateFileSystemEntries(string path, string searchPattern, SearchOption option);
 		bool DirectoryExists(string path);

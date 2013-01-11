@@ -3,8 +3,8 @@ using TCResourceVerifier.Entities;
 
 namespace TCResourceVerifier.Interfaces
 {
-    public interface IVerificationStrategy<T>
+    public interface IVerificationStrategy
     {
-        Dictionary<IWidgetFile, T> Use(string rootFolderName);
+        Dictionary<IWidgetFile, ResourceIssue> Use(IEnumerable<IWidget> widgets);
     }
 }

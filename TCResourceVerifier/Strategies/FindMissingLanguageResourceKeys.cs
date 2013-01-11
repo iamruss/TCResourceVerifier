@@ -7,6 +7,7 @@
 #endregion
 
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using TCResourceVerifier.Entities;
@@ -15,51 +16,58 @@ using TCResourceVerifier.Interfaces;
 
 namespace TCResourceVerifier.Strategies
 {
-    public class FindMissingLanguageResourceKeys : IVerificationStrategy<Dictionary<string, MissingResourceInfo>>
+    public class FindMissingLanguageResourceKeys : IVerificationStrategy
 	{
-        public Dictionary<IWidgetFile, Dictionary<string, MissingResourceInfo>> Use(string rootFolderName)
+        public Dictionary<IWidgetFile, ResourceIssue> Use(IEnumerable<IWidget> widgets)
 		{
-			var problems = new Dictionary<IWidgetFile, Dictionary<string, MissingResourceInfo>>();
-            var widgetReader = new WidgetReader(rootFolderName);
-			List<IWidget> widgets = widgetReader.LoadWidgets();
+            var widgetIssues = new Dictionary<IWidgetFile, ResourceIssue>();
 
 			foreach (IWidget widget in widgets)
 			{
                 //find tokens used in this widget 
 			    IEnumerable<string> tokensInUse = widget.ContentScript.ParseLanguageToken();
-                //
-				VerifyLanguageTokens(widget, tokensInUse, widget, problems);
-				foreach (IWidgetDependencyFile dependencyFile in widget.DependencyFiles.Where((df) => df.WidgetFileType == WidgetFileType.VelocityFile))
+                
+                //verify root widget file
+				VerifyLanguageTokensHaveResourceEntries(widget, tokensInUse, widget, widgetIssues);
+
+                //verify dependencies
+				foreach (IWidgetDependencyFile dependencyFile in widget.DependencyFiles.Where(df => df.WidgetFileType == WidgetFileType.VelocityFile))
 				{
 					string velocityFileContent = File.ReadAllText(dependencyFile.FullPath);
 					IEnumerable<string> tokensInUseByDependencyFile = velocityFileContent.ParseLanguageToken();
-					VerifyLanguageTokens(dependencyFile, tokensInUseByDependencyFile, widget, problems);
+					VerifyLanguageTokensHaveResourceEntries(dependencyFile, tokensInUseByDependencyFile, widget, widgetIssues);
 				}
 			}
-			return problems;
+			return widgetIssues;
 		}
 
-		private static void VerifyLanguageTokens(IWidgetFile widget, IEnumerable<string> tokensInUse, IWidget rootWidgetFile, Dictionary<IWidgetFile, Dictionary<string, MissingResourceInfo>> problems)
+		private static void VerifyLanguageTokensHaveResourceEntries(IWidgetFile widget, IEnumerable<string> tokensInUse, IWidget rootWidgetFile, Dictionary<IWidgetFile, ResourceIssue> problems)
 		{
+            var issue = new ResourceIssue(rootWidgetFile);
+
 			foreach (string token in tokensInUse)
 			{
 				foreach (string languageName in rootWidgetFile.Languages.Keys)
 				{
 					if (rootWidgetFile.Languages[languageName].Keys.Contains(token) == false)
 					{
-						if (!problems.ContainsKey(rootWidgetFile))
-						{
-							problems.Add(rootWidgetFile, new Dictionary<string, MissingResourceInfo>());
-						}
-						problems[rootWidgetFile][languageName] = new MissingResourceInfo
-							{
-								FileName = widget.FileName,
-								LanguageName = languageName,
-								ResourceName = token
-							};
+                        Debug.WriteLine(token);
+                        if (!issue.MissingResources.Any(pri=>pri.LanguageName == languageName && pri.ResourceName == token))
+                        {
+                            issue.MissingResources.Add(new ProblemResourceInfo
+                                {
+                                    LanguageName = languageName,
+                                    ResourceName = token,
+                                    WidetFile = widget
+                                });
+                        }
 					}
 				}
 			}
+            if (issue.HasIssues())
+            {
+                problems.Add(rootWidgetFile, issue);
+            }
 		}
 
 	}

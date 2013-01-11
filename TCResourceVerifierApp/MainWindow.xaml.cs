@@ -25,7 +25,7 @@ namespace Grabrus.TC.ResourceVerifier
 	public partial class MainWindow : Window
 	{
 		private string _path = string.Empty;
-		private Dictionary<IWidgetFile, Dictionary<string, MissingResourceInfo>> _problems;
+		private Dictionary<IWidgetFile, ResourceIssue> _problems;
 
 		public MainWindow()
 		{
@@ -34,10 +34,15 @@ namespace Grabrus.TC.ResourceVerifier
 
 		private void OnClickBtnVerify(object sender, RoutedEventArgs e)
 		{
-			if (string.IsNullOrEmpty(_path))
-			{
+
+            if (string.IsNullOrEmpty(_path))
+            {
+#if DEBUG
+                _path = "C:\\RG\\inetpub\\tc60\\Web\\filestorage\\defaultwidgets\\7bb87a0cc5864a9392ae5b9e5f9747b7";
+#else
 				OnCLickBtnSelectFolder(null, null);
-			}
+#endif
+            }
 			_problems = null;
 			problemsGrid.ItemsSource = null;
 			detailsGrid.ItemsSource = null;
@@ -68,15 +73,16 @@ namespace Grabrus.TC.ResourceVerifier
 		private void WorkerTranactionDoWork(object sender, DoWorkEventArgs e)
 		{
 			var strategy = new FindMissingLanguageResourceKeys();
-			_problems = strategy.Use(_path);
+            var widgetReader = new WidgetReader(_path);
+            _problems = strategy.Use(widgetReader.LoadWidgets());
 		}
 
 		private void OnSelectedProblemSelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
 			if (problemsGrid.SelectedItem != null && _problems.ContainsKey((IWidgetFile) problemsGrid.SelectedItem))
 			{
-				Dictionary<string, MissingResourceInfo> selected = _problems[((IWidgetFile) problemsGrid.SelectedItem)];
-				detailsGrid.ItemsSource = selected.Values;
+				ResourceIssue selected = _problems[((IWidgetFile) problemsGrid.SelectedItem)];
+				detailsGrid.ItemsSource = selected.MissingResources;
 			}
 		}
 

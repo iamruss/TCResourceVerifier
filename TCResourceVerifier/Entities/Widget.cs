@@ -12,47 +12,8 @@ using TCResourceVerifier.Interfaces;
 
 namespace TCResourceVerifier.Entities
 {
-	public class Widget : IWidget
+    public class Widget : IWidget
 	{
-		private sealed class WidgetEqualityComparer : IEqualityComparer<Widget>
-		{
-			public bool Equals(Widget x, Widget y)
-			{
-				if (ReferenceEquals(x, y))
-				{
-					return true;
-				}
-				if (ReferenceEquals(x, null))
-				{
-					return false;
-				}
-				if (ReferenceEquals(y, null))
-				{
-					return false;
-				}
-				if (x.GetType() != y.GetType())
-				{
-					return false;
-				}
-				return x.InstanceIdentifier.Equals(y.InstanceIdentifier) && x.WidgetFileType.Equals(y.WidgetFileType);
-			}
-
-			public int GetHashCode(Widget obj)
-			{
-				unchecked
-				{
-					return (obj.InstanceIdentifier.GetHashCode()*397) ^ obj.WidgetFileType.GetHashCode();
-				}
-			}
-		}
-
-		private static readonly IEqualityComparer<Widget> WidgetComparerInstance = new WidgetEqualityComparer();
-
-		public static IEqualityComparer<Widget> WidgetComparer
-		{
-			get { return WidgetComparerInstance; }
-		}
-
 		public Widget()
 		{
 			Languages = new Dictionary<string, Dictionary<string, string>>();
@@ -78,5 +39,44 @@ namespace TCResourceVerifier.Entities
 		public WidgetFileType WidgetFileType { get; set; }
 
 		#endregion
+
+        private sealed class WidgetEqualityComparer : IEqualityComparer<Widget>
+        {
+            public bool Equals(Widget x, Widget y)
+            {
+                if (ReferenceEquals(x, y))
+                {
+                    return true;
+                }
+                if (ReferenceEquals(x, null))
+                {
+                    return false;
+                }
+                if (ReferenceEquals(y, null))
+                {
+                    return false;
+                }
+                if (x.GetType() != y.GetType())
+                {
+                    return false;
+                }
+                return x.InstanceIdentifier.Equals(y.InstanceIdentifier) && x.WidgetFileType.Equals(y.WidgetFileType);
+            }
+
+            public int GetHashCode(Widget obj)
+            {
+                unchecked
+                {
+                    return (obj.InstanceIdentifier.GetHashCode() * 397) ^ obj.WidgetFileType.GetHashCode();
+                }
+            }
+        }
+
+        private static readonly IEqualityComparer<Widget> WidgetComparerInstance = new WidgetEqualityComparer();
+
+        public static IEqualityComparer<Widget> WidgetComparer
+        {
+            get { return WidgetComparerInstance; }
+        }
 	}
 }

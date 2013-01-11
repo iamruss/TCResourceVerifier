@@ -35,7 +35,7 @@
                   IsReadOnly="True"
                   Name="detailsGrid" VerticalAlignment="Stretch">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Referencing File" Binding="{Binding FileName}"/>
+                <DataGridTextColumn Header="Referencing File" Binding="{Binding WidetFile.FileName}"/>
                 <DataGridTextColumn Header="Language" Binding="{Binding LanguageName}"/>
                 <DataGridTextColumn Header="Resource Name" Binding="{Binding ResourceName}"/>
             </DataGrid.Columns>

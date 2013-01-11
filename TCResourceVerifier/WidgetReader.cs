@@ -14,10 +14,11 @@ using System.Linq;
 using System.Xml.Linq;
 using TCResourceVerifier.Entities;
 using TCResourceVerifier.Interfaces;
+using TCResourceVerifier.Services;
 
 namespace TCResourceVerifier
 {
-	public class WidgetReader
+    public class WidgetReader
 	{
 		private const string ImageFileExtensions = ".jpg.png.gif";
 		private readonly IFileSystemService _fileSystemService;

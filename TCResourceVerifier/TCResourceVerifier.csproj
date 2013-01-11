@@ -41,6 +41,9 @@
     <DelaySign>false</DelaySign>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Ninject">
+      <HintPath>..\packages\Ninject.3.0.1.10\lib\net40\Ninject.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -50,10 +53,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Entities\MissingResourceInfo.cs" />
+    <Compile Include="Entities\ProblemResourceInfo.cs" />
+    <Compile Include="Entities\ResourceIssue.cs" />
     <Compile Include="Entities\Widget.cs" />
     <Compile Include="Entities\WidgetDependencyFile.cs" />
-    <Compile Include="FileSystemServiceImpl.cs" />
+    <Compile Include="Interfaces\IResourceIssue.cs" />
+    <Compile Include="Services\FileSystemServiceImpl.cs" />
     <Compile Include="Interfaces\IFileSystemService.cs" />
     <Compile Include="Interfaces\IVerificationStrategy.cs" />
     <Compile Include="Interfaces\IWidgetDependencyFile.cs" />
@@ -62,6 +67,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Entities\WidgetFileType.cs" />
     <Compile Include="Extensions\LanguageResourceParser.cs" />
+    <Compile Include="SimpleModule.cs" />
+    <Compile Include="Verifier.cs" />
     <Compile Include="WidgetReader.cs" />
     <Compile Include="Strategies\FindMissingLanguageResourceKeys.cs" />
   </ItemGroup>
