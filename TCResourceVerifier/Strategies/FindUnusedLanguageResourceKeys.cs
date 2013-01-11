@@ -17,11 +17,10 @@ namespace TCResourceVerifier.Strategies
             //find tokens used in this widget 
 
             //verify root widget file
-            IEnumerable<string> tokensInUse = GetRootWidgetTokens(widget).ToList();
-            VerifyLanguageTokensHaveResourceEntries(widget, tokensInUse, widget, widgetIssues.ProblemResources);
+            List<string> tokensNotInUse = GetRootWidgetTokens(widget).ToList();
+            VerifyLanguageTokensHaveResourceEntries(widget, tokensNotInUse, widget, widgetIssues.ProblemResources);
 
             //verify dependencies
-            List<string> combined = new List<string>(tokensInUse);
             var depFiles = widget.DependencyFiles.Where(df => df.WidgetFileType == WidgetFileType.VelocityFile).ToList();
             if (depFiles.Count == 0)
             {
@@ -31,24 +30,21 @@ namespace TCResourceVerifier.Strategies
             {
                 string velocityFileContent = File.ReadAllText(dependencyFile.FullPath);
                 IEnumerable<string> tokensInUseByDependencyFile = velocityFileContent.ParseLanguageToken().ToList();
-                if (combined != null)
+                if (tokensNotInUse != null)
                 {
-                    combined.AddRange(tokensInUseByDependencyFile.Except(combined));
-                    combined = VerifyLanguageTokensHaveResourceEntries(dependencyFile, combined, widget, widgetIssues.ProblemResources) as List<string>;
-                    if (combined != null && combined.Count == 0)
+                    tokensNotInUse.AddRange(tokensInUseByDependencyFile.Except(tokensNotInUse));
+                    tokensNotInUse = VerifyLanguageTokensHaveResourceEntries(dependencyFile, tokensNotInUse, widget, widgetIssues.ProblemResources) as List<string>;
+                    if (tokensNotInUse != null && tokensNotInUse.Count == 0)
                     {
                         break;
                     }
                 }
             }
-            //foreach (IWidgetDependencyFile dependencyFile in depFiles)
-            //{
-            //    VerifyLanguageTokensHaveResourceEntries(dependencyFile, combined, widget, widgetIssues.ProblemResources);
-            //}
-            if (combined != null)
-                foreach (var token in combined)
+
+            if (tokensNotInUse != null)
+                foreach (var token in tokensNotInUse)
                 {
-                    Debug.WriteLine(token);
+                    //Debug.WriteLine(token);
                     if (!widgetIssues.ProblemResources.Any(pri =>  pri.ResourceName == token && pri.ProblemType != ResourceProblemType.MissingResource))
                     {
                         widgetIssues.ProblemResources.Add(new ProblemResourceInfo
@@ -83,27 +79,9 @@ namespace TCResourceVerifier.Strategies
             {
                 return tokensInUse as IList<string>;
             }
-
-            //foreach (string languageName in rootWidgetFile.Languages.Keys)
-            //{
-                IList<string> inUse = tokensInUse as IList<string> ?? tokensInUse.ToList();
-                IEnumerable<string> unusedTokens = rootWidgetFile.Languages["en-us"].Keys.Except(inUse);
-                return unusedTokens.ToList();
-                //foreach (var token in unusedTokens)
-                //{
-                //    Debug.WriteLine(token);
-                //    if (!issueList.Any(pri => pri.LanguageName == languageName && pri.ResourceName == token && pri.ProblemType != ResourceProblemType.MissingResource))
-                //    {
-                //        issueList.Add(new ProblemResourceInfo
-                //                          {
-                //                              LanguageName = languageName,
-                //                              ResourceName = token,
-                //                              WidetFile = widget,
-                //                              ProblemType = ResourceProblemType.UnusedResources
-                //                          });
-                //    }
-                //}
-           // }
+            IList<string> inUse = tokensInUse as IList<string> ?? tokensInUse.ToList();
+            IEnumerable<string> unusedTokens = rootWidgetFile.Languages["en-us"].Keys.Except(inUse);
+            return unusedTokens.ToList();
         }
     }
 }
