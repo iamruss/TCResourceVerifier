@@ -79,6 +79,10 @@ namespace TCResourceVerifier.Strategies
 
         private static IList<string> VerifyLanguageTokensHaveResourceEntries(IWidgetFile widget, IEnumerable<string> tokensInUse, IWidget rootWidgetFile, List<ProblemResourceInfo> issueList)
         {
+            if (rootWidgetFile.Languages.Count == 0)
+            {
+                return tokensInUse as IList<string>;
+            }
 
             //foreach (string languageName in rootWidgetFile.Languages.Keys)
             //{
