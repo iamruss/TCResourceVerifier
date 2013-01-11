@@ -14,6 +14,7 @@ using Grabrus.TC.ResourceVerifier.Properties;
 using TCResourceVerifier;
 using TCResourceVerifier.Entities;
 using TCResourceVerifier.Interfaces;
+using TCResourceVerifier.Strategies;
 using WPFFolderBrowser;
 
 namespace Grabrus.TC.ResourceVerifier
@@ -66,8 +67,8 @@ namespace Grabrus.TC.ResourceVerifier
 
 		private void WorkerTranactionDoWork(object sender, DoWorkEventArgs e)
 		{
-			var wv = new WidgetVerifier();
-			_problems = wv.VerifyWidgets(_path);
+			var strategy = new FindMissingLanguageResourceKeys();
+			_problems = strategy.Use(_path);
 		}
 
 		private void OnSelectedProblemSelectionChanged(object sender, SelectionChangedEventArgs e)

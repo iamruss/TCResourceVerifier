@@ -11,7 +11,7 @@ using System.Collections.Generic;
 
 namespace TCResourceVerifier.Interfaces
 {
-	public interface IWidget : IWidgetFile
+    public interface IWidget : IWidgetFile
 	{
 		string Name { get; set; }
 		string Description { get; set; }

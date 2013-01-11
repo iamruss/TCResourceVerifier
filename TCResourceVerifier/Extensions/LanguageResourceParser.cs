@@ -10,18 +10,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace TCResourceVerifier
+namespace TCResourceVerifier.Extensions
 {
-	public class LanguageTokenParser
+	public static class LanguageTokenParserExtension
 	{
 		private static readonly Regex TokenRegex
-			= new Regex(@"_language\.GetResource\(('|""){1}(?<langToken>([^'\$""]*)+)('|""){1}\)",
+			= new Regex(@"\$core_v2_language\.GetResource\(('|""){1}(?<langToken>([^'\$""]*)+)('|""){1}\)",
 							RegexOptions.Compiled
 							| RegexOptions.IgnoreCase
 							| RegexOptions.Multiline
 							| RegexOptions.IgnorePatternWhitespace);
 
-		public static IEnumerable<string> Parse(string content)
+		public static IEnumerable<string> ParseLanguageToken(this string content)
 		{
 			MatchCollection matches = TokenRegex.Matches(content);
 			List<string> tokens = matches.Cast<Match>()

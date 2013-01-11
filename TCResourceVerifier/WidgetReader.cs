@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Xml.Linq;
 using TCResourceVerifier.Entities;
 using TCResourceVerifier.Interfaces;
@@ -44,8 +45,7 @@ namespace TCResourceVerifier
 		public List<IWidget> LoadWidgets()
 		{
 			var resultList = new List<IWidget>();
-			var files =
-				new List<string>(_fileSystemService.EnumerateFileSystemEntries(_rootFolderName,
+			var files = new List<string>(_fileSystemService.EnumerateFileSystemEntries(_rootFolderName,
 				                                                               "*.xml",
 				                                                               SearchOption.TopDirectoryOnly));
 
@@ -87,6 +87,8 @@ namespace TCResourceVerifier
 						LoadLanguages(widget, widgetElement);
 
 						LoadDependenices(widget, fileInfo);
+
+					    ResolveWidgetHeader(widget);
 					}
 				}
 				catch (Exception e)
@@ -104,7 +106,34 @@ namespace TCResourceVerifier
 			return widgetsInFile;
 		}
 
-		private void LoadDependenices(Widget widget, FileInfo fileInfo)
+        private const string HeaderResourcePrefix = "${resource:";
+	    private void ResolveWidgetHeader(Widget widget)
+	    {
+            if (widget.Name.StartsWith(HeaderResourcePrefix))
+            {
+                widget.Name = ResolveResource(widget, widget.Name);
+            }
+            if (widget.Description.StartsWith(HeaderResourcePrefix))
+            {
+                widget.Description = ResolveResource(widget, widget.Description);  
+            }
+	    }
+
+	    private string ResolveResource(Widget widget, string stringToResolve)
+	    {
+            if (widget.Languages.Count != 0)
+            {
+                var firstLang = widget.Languages.Keys.FirstOrDefault();
+                if (firstLang != null)
+                {
+                    string token = stringToResolve.TrimEnd(new[] { ' ', '}' }).Replace(HeaderResourcePrefix,"");
+                    return widget.Languages[firstLang][token];
+                }
+            }
+            return stringToResolve;
+	    }
+
+	    private void LoadDependenices(Widget widget, FileInfo fileInfo)
 		{
 			//read dependencies and parse VM files
 			string dependencyPath = string.Format("{0}\\{1}\\",

@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{6BD82076-44F9-4395-A1D0-05BB10CAA5AE}</ProjectGuid>
+    <ProjectGuid>{B0FA5DB3-85B9-47BD-9689-4B4192D8370C}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>TCResourceVerifier</RootNamespace>
-    <AssemblyName>TCResourceVerifier</AssemblyName>
+    <RootNamespace>TCResourceVerifier.Tests</RootNamespace>
+    <AssemblyName>TCResourceVerifier.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -30,17 +30,13 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <PropertyGroup>
-    <SignAssembly>false</SignAssembly>
-  </PropertyGroup>
-  <PropertyGroup>
-    <AssemblyOriginatorKeyFile>
-    </AssemblyOriginatorKeyFile>
-  </PropertyGroup>
-  <PropertyGroup>
-    <DelaySign>false</DelaySign>
-  </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Moq">
+      <HintPath>..\packages\Moq.4.0.10827\lib\NET40\Moq.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.framework">
+      <HintPath>..\packages\NUnit.2.6.2\lib\nunit.framework.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -50,23 +46,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Entities\MissingResourceInfo.cs" />
-    <Compile Include="Entities\Widget.cs" />
-    <Compile Include="Entities\WidgetDependencyFile.cs" />
-    <Compile Include="FileSystemServiceImpl.cs" />
-    <Compile Include="Interfaces\IFileSystemService.cs" />
-    <Compile Include="Interfaces\IVerificationStrategy.cs" />
-    <Compile Include="Interfaces\IWidgetDependencyFile.cs" />
-    <Compile Include="Interfaces\IWidget.cs" />
-    <Compile Include="Interfaces\IWidgetFile.cs" />
+    <Compile Include="LanguageResourceParserTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Entities\WidgetFileType.cs" />
-    <Compile Include="Extensions\LanguageResourceParser.cs" />
-    <Compile Include="WidgetReader.cs" />
-    <Compile Include="Strategies\FindMissingLanguageResourceKeys.cs" />
+    <Compile Include="TokenTestCases.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\TCResourceVerifier\TCResourceVerifier.csproj">
+      <Project>{6BD82076-44F9-4395-A1D0-05BB10CAA5AE}</Project>
+      <Name>TCResourceVerifier</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

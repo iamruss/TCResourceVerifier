@@ -22,8 +22,9 @@
                   Name="problemsGrid" VerticalAlignment="Stretch" SelectionChanged="OnSelectedProblemSelectionChanged">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="InstanceIdentifier" Binding="{Binding InstanceIdentifier}"/>
-                <DataGridTextColumn Header="Name" Binding="{Binding Name}"/>
                 <DataGridTextColumn Header="FileName" Binding="{Binding FileName}"/>
+                <DataGridTextColumn Header="Name" Binding="{Binding Name}"/>
+                <DataGridTextColumn Header="Description" Binding="{Binding Description}"/>
             </DataGrid.Columns>
         </DataGrid>
         <GridSplitter Grid.Row="1" ResizeDirection="Rows" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Height="6" Width="Auto"/>

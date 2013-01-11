@@ -5,6 +5,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TCResourceVerifierApp", "TC
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TCResourceVerifier", "TCResourceVerifier\TCResourceVerifier.csproj", "{6BD82076-44F9-4395-A1D0-05BB10CAA5AE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TCResourceVerifier.Tests", "TCResourceVerifier.Tests\TCResourceVerifier.Tests.csproj", "{B0FA5DB3-85B9-47BD-9689-4B4192D8370C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{D4E0438E-B1F4-4AA2-9AC9-74E46FC0349D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,8 +39,21 @@ Global
 		{6BD82076-44F9-4395-A1D0-05BB10CAA5AE}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{6BD82076-44F9-4395-A1D0-05BB10CAA5AE}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{6BD82076-44F9-4395-A1D0-05BB10CAA5AE}.Release|x86.ActiveCfg = Release|Any CPU
+		{B0FA5DB3-85B9-47BD-9689-4B4192D8370C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B0FA5DB3-85B9-47BD-9689-4B4192D8370C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B0FA5DB3-85B9-47BD-9689-4B4192D8370C}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{B0FA5DB3-85B9-47BD-9689-4B4192D8370C}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{B0FA5DB3-85B9-47BD-9689-4B4192D8370C}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{B0FA5DB3-85B9-47BD-9689-4B4192D8370C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B0FA5DB3-85B9-47BD-9689-4B4192D8370C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B0FA5DB3-85B9-47BD-9689-4B4192D8370C}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{B0FA5DB3-85B9-47BD-9689-4B4192D8370C}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{B0FA5DB3-85B9-47BD-9689-4B4192D8370C}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{B0FA5DB3-85B9-47BD-9689-4B4192D8370C} = {D4E0438E-B1F4-4AA2-9AC9-74E46FC0349D}
 	EndGlobalSection
 EndGlobal
